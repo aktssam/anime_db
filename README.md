@@ -1,6 +1,7 @@
 # anime_db
 
 A new Flutter project.
+First Commit: Include Firebase Messaging (FCM)
 
 ## Getting Started
 
