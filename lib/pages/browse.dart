@@ -1,9 +1,8 @@
+import 'package:anime_db/model/anime_model.dart';
+import 'package:anime_db/pages/detail.dart';
 import 'package:anime_db/styles/colorStyle.dart';
 import 'package:anime_db/styles/fontStyle.dart';
-import 'package:anime_db/model/data.dart';
 import 'package:flutter/material.dart';
-
-import 'detail.dart';
 
 class BrowsePage extends StatelessWidget {
   @override
@@ -18,108 +17,122 @@ class BrowsePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // title
-                Text(
-                  'Browse',
-                  style: header,
-                ),
-                Icon(Icons.search, size: 32,),
-                // search bar
-                // SearchBar(setState: setState, buildDefaultAppBar: buildDefaultAppBar)
+                Text('Browse', style: header),
+                Icon(Icons.search, size: 32),
               ],
             ),
           ),
         ),
-        body: AnimeList(),
+        body: ListAnimeData(),
       ),
     );
   }
 }
 
-class AnimeList extends StatelessWidget {
-  final List<Map<String, dynamic>> listAnime = LIST_DATA;
+class ListAnimeData extends StatefulWidget {
+  @override
+  _ListAnimeDataState createState() => _ListAnimeDataState();
+}
+
+class _ListAnimeDataState extends State<ListAnimeData> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: BouncingScrollPhysics(),
-      children: listAnime.map((data) {
-        List genre = data['genre'];
-        return Card(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: InkWell(
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailPage(listDetail: data)));
-            },
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Thumbnail
-                Container(
-                  width: 120,
-                  height: 160,
-                  child: Image.asset(
-                    'images/${data['image']}',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                //Column
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      //judul
-                      Text(
-                        data['title'].toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      //rating
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.amber, size: 18,),
-                          SizedBox(width: 3,),
-                          Text(data['rating'].toString(), style: TextStyle(color: navySoft),),
-                        ],
-                      ),
-                      //status
-                      Text(data['status'].toString(), style: TextStyle(color: navySoft),),
-                      Text(data['premiere'].toString(), style: TextStyle(color: navySoft),),
-                      //genre
-                      SizedBox(height: 8,),
-                      Row(
-                        children: genre.map((genre) {
-                          return Container(
-                            margin: EdgeInsets.only(right: 3),
-                            color: Colors.blue[300],
-                            child: Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: Text(
-                                "$genre", style: TextStyle(fontSize: 11, color:Colors.white),
-                              ),
-                            ),
-                          );
-                        }).toList()),
-                    ],
-                  ),
-                ),
-              ],
+    return FutureBuilder(
+      future: Anime.connectToAPI(0),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.data == null) {
+          return Container(
+            child: Center(
+              child: Text("Loading..."),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        } else {
+          return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int id) {
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => DetailPage(listDetail: snapshot.data[id])
+                        )
+                      );
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Thumbnail
+                        Container(
+                          width: 120,
+                          height: 160,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            child: Image.network(
+                              snapshot.data[id].coverImage,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        //Column
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              //judul
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.5,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(snapshot.data[id].title,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    softWrap: true,
+                                    // overflow: TextOverflow.ellipsis,
+                              ),),
+                              SizedBox(height: 16),
+                              //rating
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_rate,
+                                    color: Colors.amber,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    snapshot.data[id].rating,
+                                    style: TextStyle(color: navySoft),
+                                  ),
+                                ],
+                              ),
+                              //status
+                              Text(
+                                "Status: ${snapshot.data[id].status}",
+                                style: TextStyle(color: navySoft),
+                              ),
+                              //genre
+                              SizedBox(
+                                height: 8,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        }
+      },
     );
   }
 }

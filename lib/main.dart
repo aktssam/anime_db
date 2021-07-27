@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:anime_db/pages/home.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() async {
-  WidgetsBinding.instance;
-  await Firebase.initializeApp();
+void main() {
+  // WidgetsBinding.instance;
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: BottomNavBar(),
     );
@@ -35,23 +36,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-
-    // instance Firebase Messaging
-    FirebaseMessaging.instance.getInitialMessage();
-
-    // handling forground message
-    FirebaseMessaging.onMessage.listen((message) async {
-      if (message.notification != null) {
-        print(message.notification!.title);
-        print(message.notification!.body);
-      }
-    });
-    // handling background message
-    FirebaseMessaging.onBackgroundMessage((message) async {
-      if (message.notification != null) {
-        print(message.notification!.title);
-      }
-    });
+    // // instance Firebase Messaging
+    // FirebaseMessaging.instance.getInitialMessage();
+    // // handling forground message
+    // FirebaseMessaging.onMessage.listen((message) async {
+    //   print(message.notification?.title);
+    //   print(message.notification?.body);
+    // });
+    // // handling background message
+    // FirebaseMessaging.onBackgroundMessage((message) async {
+    //   print(message);
+    // });
   }
 
   final pageOption = [
