@@ -19,9 +19,6 @@ class HistoryPage extends StatelessWidget {
                   'History',
                   style: header,
                 ),
-                Icon(Icons.search, size: 32,),
-                // search bar
-                // SearchBar(setState: setState, buildDefaultAppBar: buildDefaultAppBar)
               ],
             ),
           ),
@@ -35,8 +32,6 @@ class HistoryPage extends StatelessWidget {
 class HistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Container();
   }
 }

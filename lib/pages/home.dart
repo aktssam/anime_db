@@ -39,9 +39,9 @@ class HomePage extends StatelessWidget {
                   ].map((e) {
                     return Builder(builder: (BuildContext context) {
                       return Container(
-                        // width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 0),
-                        child: ClipRRect(
+                          // width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 0),
+                          child: ClipRRect(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               child: Image.asset(

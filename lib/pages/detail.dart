@@ -41,16 +41,21 @@ class DetailPage extends StatelessWidget {
                     children: [
                       Text(
                         listDetail.title,
-                        style:
-                            TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                         softWrap: true,
                       ),
                       SizedBox(height: 10),
                       Text("Status: ${listDetail.status}", style: subtitle),
                       Row(children: [
-                        Icon(Icons.star_rate, color: Colors.amber, size: 18,),
+                        Icon(
+                          Icons.star_rate,
+                          color: Colors.amber,
+                          size: 18,
+                        ),
                         SizedBox(width: 4),
-                        Text(listDetail.rating,
+                        Text(
+                          listDetail.rating,
                           style: subtitle,
                         ),
                       ]),

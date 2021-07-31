@@ -54,10 +54,11 @@ class _ListAnimeDataState extends State<ListAnimeData> {
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => DetailPage(listDetail: snapshot.data[id])
-                        )
-                      );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPage(listDetail: snapshot.data[id])));
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,16 +87,18 @@ class _ListAnimeDataState extends State<ListAnimeData> {
                             children: [
                               //judul
                               Container(
-                                width: MediaQuery.of(context).size.width*0.5,
+                                width: MediaQuery.of(context).size.width * 0.5,
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(snapshot.data[id].title,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    softWrap: true,
-                                    // overflow: TextOverflow.ellipsis,
-                              ),),
+                                child: Text(
+                                  snapshot.data[id].title,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  softWrap: true,
+                                  // overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                               SizedBox(height: 16),
                               //rating
                               Row(
