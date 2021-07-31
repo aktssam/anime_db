@@ -88,14 +88,15 @@ class _ListAnimeDataState extends State<ListAnimeData> {
                               //judul
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.5,
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.only(bottom: 16),
                                 child: Text(
                                   snapshot.data[id].title,
                                   style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.black,
                                       fontWeight: FontWeight.bold),
-                                  softWrap: true,
+                                  // softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                   // overflow: TextOverflow.ellipsis,
                                 ),
                               ),

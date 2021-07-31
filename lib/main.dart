@@ -2,10 +2,12 @@ import 'package:anime_db/pages/browse.dart';
 import 'package:anime_db/pages/history.dart';
 import 'package:anime_db/pages/settings.dart';
 import 'package:anime_db/styles/colorStyle.dart';
+import 'package:anime_db/styles/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_db/pages/home.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // WidgetsBinding.instance;
@@ -16,13 +18,18 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // darkTheme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      home: BottomNavBar(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      builder: (context, _) {
+        final themeProvider = Provider.of<ThemeProvider>(context);
+        return MaterialApp(
+          themeMode: themeProvider.themeMode,
+          theme: MyTheme.lightTheme,
+          darkTheme: MyTheme.darkTheme,
+          debugShowCheckedModeBanner: false,
+          home: BottomNavBar(),
+        );
+      });
 }
 
 class BottomNavBar extends StatefulWidget {
@@ -63,8 +70,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
-        selectedItemColor: blackPrimary,
-        unselectedItemColor: navySoft,
         iconSize: 28,
         selectedLabelStyle:
             TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
