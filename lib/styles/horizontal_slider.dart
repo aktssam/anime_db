@@ -16,7 +16,7 @@ class HorizontalScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Anime.connectToAPI(indexAPI),
+        future: Anime.connectAPI(indexAPI),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return Container(
@@ -34,7 +34,7 @@ class HorizontalScroll extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 5),
                   child: Row(
-                    children: snapshot.data.map<Widget>((fetch) {
+                      children: snapshot.data.map<Widget>((fetch) {
                     return Container(
                       width: 128,
                       height: 256,
@@ -42,10 +42,10 @@ class HorizontalScroll extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
-                              context, MaterialPageRoute(
-                                builder: (context) => DetailPage(listDetail: fetch)
-                            )
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailPage(listDetail: fetch)));
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

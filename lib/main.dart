@@ -1,3 +1,4 @@
+import 'package:anime_db/bloc/anime_bloc.dart';
 import 'package:anime_db/pages/browse.dart';
 import 'package:anime_db/pages/history.dart';
 import 'package:anime_db/pages/settings.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_db/pages/home.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -58,7 +60,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final pageOption = [
     HomePage(),
-    BrowsePage(),
+    BlocProvider<AnimeBloc>(
+        create: (_) => AnimeBloc()..add(AnimeEvent()), child: BrowsePage()),
     HistoryPage(),
     SettingsPage(),
   ];

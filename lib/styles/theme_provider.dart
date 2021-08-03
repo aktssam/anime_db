@@ -12,10 +12,10 @@ class ThemeProvider extends ChangeNotifier {
 class MyTheme {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.grey.shade900,
-    colorScheme: ColorScheme.dark(),
+    colorScheme: ColorScheme.dark(primary: Colors.lightBlue.shade400),
   );
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    colorScheme: ColorScheme.light(),
+    colorScheme: ColorScheme.light(primary: Colors.blue.shade800),
   );
 }

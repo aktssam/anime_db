@@ -37,20 +37,32 @@ class Anime {
     );
   }
 
-  static Future<List<Anime>> connectToAPI(int key) async {
-    String apiURL = "https://kitsu.io/api/edge/anime";
+  static Future<List<Anime>> connectToAPI(int start, int limit) async {
+    String apiURL =
+        "https://kitsu.io/api/edge/anime?page[limit]=$limit&page[offset]=$start";
 
+    var apiResults = await http.get(Uri.parse(apiURL));
+    var jsonObject = json.decode(apiResults.body);
+    var animeData = (jsonObject as Map<String, dynamic>)['data'];
+
+    List<Anime> listAnime = [];
+    for (var object in animeData) {
+      listAnime.add(Anime.createData(object));
+    }
+    return listAnime;
+  }
+
+  static Future<List<Anime>> connectAPI(int key) async {
+    String apiURL = "";
     switch (key) {
       case 1:
-        //GET Favorite API
         apiURL = "https://kitsu.io/api/edge/anime?sort=-favoritesCount";
         break;
       case 2:
-        //GET Popular API
         apiURL = "https://kitsu.io/api/edge/trending/anime";
         break;
       default:
-        apiURL = "https://kitsu.io/api/edge/anime?sort=canonicalTitle";
+        apiURL = "https://kitsu.io/api/edge/anime";
     }
 
     var apiResults = await http.get(Uri.parse(apiURL));
