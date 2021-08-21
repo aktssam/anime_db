@@ -1,11 +1,10 @@
 import 'package:anime_db/bloc/anime_bloc.dart';
-import 'package:anime_db/model/anime_model.dart';
 import 'package:anime_db/pages/detail.dart';
+import 'package:anime_db/pages/search.dart';
 import 'package:anime_db/styles/colorStyle.dart';
 import 'package:anime_db/styles/fontStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 
 class BrowsePage extends StatelessWidget {
   @override
@@ -21,7 +20,17 @@ class BrowsePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Browse', style: header),
-                  Icon(Icons.search, size: 32),
+                  InkWell(
+                      child: Icon(
+                        Icons.search,
+                        size: 32,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchPage()));
+                      }),
                 ],
               ),
             ),
