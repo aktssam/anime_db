@@ -21,6 +21,10 @@ class Anime {
   factory Anime.createData(Map<String, dynamic> object) {
     var attributes = object['attributes'];
     var image = (attributes as Map<String, dynamic>)['posterImage'];
+
+    var coverImage = (image != null)
+        ? image['small']
+        : "https://www.dranneede.nl/assets/images/trainers/geenfoto.png";
     var avgRating = attributes['averageRating'];
     var sinopsis = attributes['synopsis'];
 
@@ -36,7 +40,7 @@ class Anime {
       title: attributes['canonicalTitle'],
       rating: avgRating,
       status: attributes['status'],
-      coverImage: image['small'],
+      coverImage: coverImage,
       sinopsis: sinopsis,
     );
   }
