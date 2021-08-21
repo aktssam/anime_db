@@ -20,12 +20,15 @@ class SettingsPage extends StatelessWidget {
             ]),
           ),
           SizedBox(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Dark Mode'),
-              ChangeThemeButtonWidget(),
-            ],
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Dark Mode'),
+                ChangeThemeButtonWidget(),
+              ],
+            ),
           ),
         ],
       ),

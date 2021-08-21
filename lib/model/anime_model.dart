@@ -22,9 +22,13 @@ class Anime {
     var attributes = object['attributes'];
     var image = (attributes as Map<String, dynamic>)['posterImage'];
     var avgRating = attributes['averageRating'];
+    var sinopsis = attributes['synopsis'];
 
     if (avgRating == null) {
       avgRating = "--";
+    }
+    if (sinopsis == null) {
+      sinopsis = "-";
     }
 
     return Anime(
@@ -33,7 +37,7 @@ class Anime {
       rating: avgRating,
       status: attributes['status'],
       coverImage: image['small'],
-      sinopsis: attributes['synopsis'],
+      sinopsis: sinopsis,
     );
   }
 
@@ -64,6 +68,20 @@ class Anime {
       default:
         apiURL = "https://kitsu.io/api/edge/anime";
     }
+
+    var apiResults = await http.get(Uri.parse(apiURL));
+    var jsonObject = json.decode(apiResults.body);
+    var animeData = (jsonObject as Map<String, dynamic>)['data'];
+
+    List<Anime> listAnime = [];
+    for (var object in animeData) {
+      listAnime.add(Anime.createData(object));
+    }
+    return listAnime;
+  }
+
+  static Future<List<Anime>> search(String input) async {
+    String apiURL = "https://kitsu.io/api/edge/anime?filter[text]=$input";
 
     var apiResults = await http.get(Uri.parse(apiURL));
     var jsonObject = json.decode(apiResults.body);
